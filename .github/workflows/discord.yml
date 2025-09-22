@@ -1,0 +1,23 @@
+name: Discord Webhook
+
+on: [push]
+
+jobs:
+  git:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run Discord Webhook
+        uses: johnnyhuy/actions-discord-git-webhook@main
+        with:
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: "🤖 GitHub Notifier"
+          avatar_url: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+          content: |
+            🚨 **Novo push detectado!**
+            Um novo push foi realizado no repositório **urban-octo-engine**.
+            > Mensagem de teste: Este é apenas um teste de integração com o Discord! 🎉
+            - Autor: ${{ github.actor }}
+            - Branch: `${{ github.ref }}`
+            - [Ver commit](${{ github.event.head_commit.url }})
